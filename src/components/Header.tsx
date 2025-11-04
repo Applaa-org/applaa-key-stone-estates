@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Building, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -13,17 +14,18 @@ const navLinks = [
 ];
 
 const NavLink = ({ href, label, isMobile = false }: { href: string; label: string; isMobile?: boolean }) => (
-  <a
-    href={href}
+  <Link
+    to={href}
     className={cn(
       "font-medium transition-colors",
       isMobile 
         ? "block w-full p-4 text-lg text-primary hover:bg-secondary"
         : "text-primary-foreground hover:text-amber-300"
     )}
+    activeProps={{ className: isMobile ? "bg-secondary font-bold" : "text-amber-300 font-bold" }}
   >
     {label}
-  </a>
+  </Link>
 );
 
 export const Header = () => {
@@ -31,14 +33,14 @@ export const Header = () => {
     <header className="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm shadow-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="bg-amber-400 p-2 rounded-md">
               <Building className="h-6 w-6 text-primary" />
             </div>
             <span className="text-2xl font-bold text-primary-foreground tracking-tight">
               Key Stone Estates
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
@@ -49,7 +51,7 @@ export const Header = () => {
 
           <div className="hidden md:block">
              <Button asChild variant="secondary" className="bg-amber-400 hover:bg-amber-500 text-primary font-bold">
-                <a href="/contact">Request a Valuation</a>
+                <Link to="/contact">Request a Valuation</Link>
             </Button>
           </div>
 
@@ -64,14 +66,14 @@ export const Header = () => {
               <SheetContent side="right" className="w-full bg-white p-0">
                 <div className="flex flex-col h-full">
                   <div className="flex justify-between items-center p-4 border-b">
-                     <a href="/" className="flex items-center gap-2">
+                     <Link to="/" className="flex items-center gap-2">
                         <div className="bg-primary p-2 rounded-md">
                           <Building className="h-6 w-6 text-amber-400" />
                         </div>
                         <span className="text-xl font-bold text-primary tracking-tight">
                           Key Stone Estates
                         </span>
-                      </a>
+                      </Link>
                     <SheetClose asChild>
                        <Button variant="ghost" size="icon">
                           <X className="h-6 w-6 text-primary" />
@@ -88,7 +90,7 @@ export const Header = () => {
                    <div className="p-4 border-t">
                      <SheetClose asChild>
                         <Button asChild className="w-full bg-amber-400 hover:bg-amber-500 text-primary font-bold">
-                            <a href="/contact">Request a Valuation</a>
+                            <Link to="/contact">Request a Valuation</Link>
                         </Button>
                      </SheetClose>
                    </div>

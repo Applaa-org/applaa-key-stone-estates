@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Building, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { MadeWithApplaa } from './made-with-applaa';
 
@@ -15,14 +16,14 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Agency Info */}
           <div className="space-y-4">
-            <a href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <div className="bg-amber-400 p-2 rounded-md">
                 <Building className="h-6 w-6 text-primary" />
               </div>
               <span className="text-xl font-bold text-primary-foreground">
                 Key Stone Estates
               </span>
-            </a>
+            </Link>
             <p className="text-sm text-gray-300">
               Your trusted partner in UK property. Whether buying, selling, or letting, we provide expert advice and exceptional service.
             </p>
@@ -39,10 +40,10 @@ export const Footer = () => {
           <div>
             <h3 className="font-semibold text-white tracking-wider">Quick Links</h3>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><a href="/properties" className="text-gray-300 hover:text-amber-400">Properties for Sale</a></li>
-              <li><a href="/properties?type=rent" className="text-gray-300 hover:text-amber-400">Properties to Rent</a></li>
-              <li><a href="/about" className="text-gray-300 hover:text-amber-400">About Us</a></li>
-              <li><a href="/contact" className="text-gray-300 hover:text-amber-400">Contact Us</a></li>
+              <li><Link to="/properties" className="text-gray-300 hover:text-amber-400">Properties for Sale</Link></li>
+              <li><Link to="/properties" search={{ type: 'rent' }} className="text-gray-300 hover:text-amber-400">Properties to Rent</Link></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-amber-400">About Us</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-amber-400">Contact Us</Link></li>
             </ul>
           </div>
 

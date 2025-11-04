@@ -1,15 +1,3 @@
-import { useState, useEffect } from 'react';
-import { Link } from '@tanstack/react-router';
-import { properties } from '@/data/data/properties';
-import { testimonials } from '@/data/data/testimonials';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Bed, Bath, Square, MapPin, PoundSterling, Star, ArrowRight } from 'luc<dyad-problem-report summary="1 problems">
-<problem file="src/pages/Properties.tsx" line="127" column="23" code="2322">Type '`/properties/${string}`' is not assignable to type '&quot;/&quot; | &quot;/properties&quot; | &quot;/about&quot; | &quot;/testimonials&quot; | &quot;/contact&quot; | &quot;.&quot; | &quot;..&quot; | &quot;/properties/$propertyId&quot;'.</problem>
-</dyad-problem-report>I'll fix this TypeScript error by updating the Link component to use the correct route path with parameters.
-
-<applaa-update-file path="src/pages/Properties.tsx" description="Fixing the Link component to use proper TanStack Router syntax with route parameters.">
 import { useState } from 'react';
 import { properties, Property } from '@/data/properties';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -136,7 +124,7 @@ const Properties = () => {
                 </div>
               </div>
               <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                <Link to="/properties/$propertyId" params={{ propertyId: property.id }}>View Details</Link>
+                <Link to={`/properties/${property.id}`}>View Details</Link>
               </Button>
             </CardContent>
           </Card>
