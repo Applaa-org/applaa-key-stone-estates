@@ -1,156 +1,167 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import { properties } from '@/data/data/properties';
-import { testimonials } from '@/data/data/testimonials';
+import { properties } from '@/data/properties';
+import { testimonials } from '@/data/testimonials';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Bed, Bath, Square, MapPin, PoundSterling, Star, ArrowRight } from 'luc<dyad-problem-report summary="1 problems">
-<problem file="src/pages/Properties.tsx" line="127" column="23" code="2322">Type '`/properties/${string}`' is not assignable to type '&quot;/&quot; | &quot;/properties&quot; | &quot;/about&quot; | &quot;/testimonials&quot; | &quot;/contact&quot; | &quot;.&quot; | &quot;..&quot; | &quot;/properties/$propertyId&quot;'.</problem>
-</dyad-problem-report>I'll fix this TypeScript error by updating the Link component to use the correct route path with parameters.
+import { Bed, Bath, Square, MapPin, PoundSterling, Star, ArrowRight, Quote } from 'lucide-react';
 
-<applaa-update-file path="src/pages/Properties.tsx" description="Fixing the Link component to use proper TanStack Router syntax with route parameters.">
-import { useState } from 'react';
-import { properties, Property } from '@/data/properties';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Bed, Bath, Square, MapPin, PoundSterling } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
-
-const Properties = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [typeFilter, setTypeFilter] = useState<'all' | 'sale' | 'rent'>('all');
-  const [priceRange, setPriceRange] = useState<'all' | 'low' | 'mid' | 'high'>('all');
-
-  const filteredProperties = properties.filter((property) => {
-    const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         property.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter === 'all' || property.type === typeFilter;
-    
-    let matchesPrice = true;
-    if (priceRange !== 'all') {
-      if (priceRange === 'low' && property.price > 500000) matchesPrice = false;
-      if (priceRange === 'mid' && (property.price < 500000 || property.price > 1000000)) matchesPrice = false;
-      if (priceRange === 'high' && property.price < 1000000) matchesPrice = false;
-    }
-    
-    return matchesSearch && matchesType && matchesPrice;
-  });
+const Index = () => {
+  const featuredProperties = properties.filter(property => property.isFeatured).slice(0, 3);
+  const featuredTestimonials = testimonials.slice(0, 2);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-primary mb-2">Property Listings</h1>
-        <p className="text-gray-600">Discover your perfect home from our curated selection</p>
-      </div>
-
-      {/* Search and Filter Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Search Properties</label>
-            <Input
-              type="text"
-              placeholder="Search by location or property name..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Property Type</label>
-            <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as any)}>
-              <SelectTrigger>
-                <SelectValue placeholder="All Types" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="sale">For Sale</SelectItem>
-                <SelectItem value="rent">To Rent</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Price Range</label>
-            <Select value={priceRange} onValueChange={(value) => setPriceRange(value as any)}>
-              <SelectTrigger>
-                <SelectValue placeholder="All Prices" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Prices</SelectItem>
-                <SelectItem value="low">Under £500k</SelectItem>
-                <SelectItem value="mid">£500k - £1M</SelectItem>
-                <SelectItem value="high">Over £1M</SelectItem>
-              </SelectContent>
-            </Select>
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-primary to-primary/90 text-primary-foreground py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold mb-6">Your Dream Home Awaits</h1>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Discover exceptional properties across the UK with Key Stone Estates. 
+            Whether buying, selling, or letting, we're here to make your property journey seamless.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" className="bg-amber-400 hover:bg-amber-500 text-primary font-bold">
+              <Link to="/properties">View Listings</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+              <Link to="/contact">Request a Valuation</Link>
+            </Button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Property Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProperties.map((property) => (
-          <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="relative h-48 overflow-hidden">
-              <img
-                src={property.images[0]}
-                alt={property.title}
-                className="w-full h-full object-cover"
-              />
-              <Badge className="absolute top-2 left-2 bg-amber-400 text-primary">
-                {property.type === 'sale' ? 'For Sale' : 'To Rent'}
-              </Badge>
-            </div>
-            <CardHeader>
-              <CardTitle className="text-primary">{property.title}</CardTitle>
-              <CardDescription className="flex items-center gap-1">
-                <MapPin className="h-4 w-4" />
-                {property.location}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2 mb-3">
-                <PoundSterling className="h-5 w-5 text-amber-600" />
-                <span className="text-2xl font-bold text-amber-600">
-                  {property.type === 'sale' 
-                    ? `£${property.price.toLocaleString()}`
-                    : `£${property.price.toLocaleString()} pcm`
-                  }
-                </span>
-              </div>
-              <p className="text-gray-600 mb-4">{property.shortDescription}</p>
-              <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                <div className="flex items-center gap-1">
-                  <Bed className="h-4 w-4" />
-                  {property.bedrooms} beds
+      {/* Featured Properties */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-primary mb-4">Featured Properties</h2>
+            <p className="text-xl text-gray-600">Handpicked properties from our premium collection</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProperties.map((property) => (
+              <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={property.images[0]}
+                    alt={property.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <Badge className="absolute top-4 left-4 bg-amber-400 text-primary">
+                    {property.type === 'sale' ? 'For Sale' : 'To Rent'}
+                  </Badge>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Bath className="h-4 w-4" />
-                  {property.bathrooms} baths
-                </div>
-                <div className="flex items-center gap-1">
-                  <Square className="h-4 w-4" />
-                  {property.area.toLocaleString()} sqft
-                </div>
-              </div>
-              <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                <Link to="/properties/$propertyId" params={{ propertyId: property.id }}>View Details</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredProperties.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No properties found matching your criteria.</p>
-          <p className="text-gray-400">Try adjusting your search filters.</p>
+                <CardHeader>
+                  <CardTitle className="text-primary">{property.title}</CardTitle>
+                  <CardDescription className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4" />
+                    {property.location}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-2 mb-3">
+                    <PoundSterling className="h-5 w-5 text-amber-600" />
+                    <span className="text-2xl font-bold text-amber-600">
+                      {property.type === 'sale' 
+                        ? `£${property.price.toLocaleString()}`
+                        : `£${property.price.toLocaleString()} pcm`
+                      }
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4">{property.shortDescription}</p>
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-1">
+                      <Bed className="h-4 w-4" />
+                      {property.bedrooms} beds
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Bath className="h-4 w-4" />
+                      {property.bathrooms} baths
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Square className="h-4 w-4" />
+                      {property.area.toLocaleString()} sqft
+                    </div>
+                  </div>
+                  <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                    <Link to="/properties/$propertyId" params={{ propertyId: property.id }}>View Details</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Link to="/properties" className="flex items-center gap-2">
+                View All Properties
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
-      )}
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-primary mb-4">What Our Clients Say</h2>
+            <p className="text-xl text-gray-600">Trusted by hundreds of satisfied clients</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {featuredTestimonials.map((testimonial) => (
+              <Card key={testimonial.id} className="relative">
+                <CardHeader>
+                  <Quote className="h-8 w-8 text-amber-400 absolute top-4 right-4" />
+                  <div className="flex items-center gap-4 mb-4">
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-16 h-16 rounded-full"
+                    />
+                    <div>
+                      <h3 className="font-semibold text-primary">{testimonial.name}</h3>
+                      <p className="text-sm text-gray-600">{testimonial.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${i < testimonial.rating ? 'text-amber-400 fill-current' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Link to="/testimonials">Read More Testimonials</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">Ready to Find Your Perfect Home?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Contact our expert team today for personalized property advice and exceptional service.
+          </p>
+          <Button asChild size="lg" className="bg-amber-400 hover:bg-amber-500 text-primary font-bold">
+            <Link to="/contact">Get Started Today</Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default Properties;
+export default Index;

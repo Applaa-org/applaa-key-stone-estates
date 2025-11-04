@@ -124,7 +124,7 @@ const Properties = () => {
                 </div>
               </div>
               <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                <Link to={`/properties/${property.id}`}>View Details</Link>
+                <Link to="/properties/$propertyId" params={{ propertyId: property.id }}>View Details</Link>
               </Button>
             </CardContent>
           </Card>
